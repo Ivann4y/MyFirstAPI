@@ -8,6 +8,8 @@ namespace MyFirstAPI.Data
         public AplikasiDbContext(DbContextOptions<AplikasiDbContext> options) : base(options) { }
         public DbSet<Produk> Produk { get; set; }
         public DbSet<Kategori> Kategori { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransactionItem> TransactionItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,6 +23,12 @@ namespace MyFirstAPI.Data
             modelBuilder.Entity<Produk>()
         .Property(p => p.Harga)
         .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Transaction>()
+                .HasMany(t => t.Items)
+                .WithOne(i => i.Transaction)
+                .HasForeignKey(i => i.TransactionId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

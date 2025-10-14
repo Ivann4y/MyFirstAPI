@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyFirstAPI.Data;
 
@@ -11,9 +12,11 @@ using MyFirstAPI.Data;
 namespace MyFirstAPI.Migrations
 {
     [DbContext(typeof(AplikasiDbContext))]
-    partial class AplikasiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251014090358_AddTransactionEntities")]
+    partial class AddTransactionEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,11 +71,7 @@ namespace MyFirstAPI.Migrations
 
                     b.Property<string>("Nama")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("Stok")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("TanggalDibuat")
                         .HasColumnType("datetime2");
